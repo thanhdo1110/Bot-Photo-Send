@@ -1,6 +1,7 @@
 # Bot-Photo-Send
 > [!NOTE]  
 > Dự án gửi ảnh lên bot 1 cách đơn giản và chưa được tối ưu hiệu quả cao bạn tự tinh chỉnh thêm.
+> Mọi bước đều có ở log.txt ở Documents của App.
 
 ## Import file vào các nợi gọi 2 hàm dưới
 `#import "TelegramBot.h`

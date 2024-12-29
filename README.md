@@ -4,7 +4,7 @@
 > 
 > Mọi bước đều có log ghi chú lại ở log.txt ở Documents của App.
 
-## Import file vào các nợi gọi 2 hàm dưới
+## Import file .h
 `#import "TelegramBot.h`
 
 ## Khởi chạy bot
